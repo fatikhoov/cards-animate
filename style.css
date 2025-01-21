@@ -182,7 +182,7 @@ body {
   .blocks-container .block {
     width: 100%; 
     max-width: none; 
-    margin: 0 auto; 
+    margin: 0; 
   }
 
   .blocks-container .block .image-wrapper {
@@ -190,18 +190,9 @@ body {
     max-height: 300px; 
   }
 
-  .blocks-container .block:first-child {
-    margin-left: 0;
-    margin-bottom: 16px; 
+  .blocks-container {
+    margin: 0 !important;
+    width: 100% !important;
   }
 
-  .blocks-container .block:nth-child(2) {
-    margin-left: 0;
-    margin-bottom: 16px;
-  }
-
-  .blocks-container .block:last-child {
-    margin-left: 0;
-    margin-bottom: 0; 
-  }
 }
