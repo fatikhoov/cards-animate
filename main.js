@@ -4,13 +4,11 @@ class Card {
     this.image = image;
     this.title = title;
     this.popupText = popupText;
-
     this.block = null; 
     this.popupTextWrap = null; 
     this.popupTextElem = null; 
     this.titleElem = null; 
   }
-
   /**
    * Метод для рендера карточки
    * @param {HTMLElement} container
@@ -42,7 +40,6 @@ class Card {
     this.block.addEventListener('pointerenter', () => this.handlePointerEnter());
     this.block.addEventListener('pointerleave', () => this.handlePointerLeave());
   }
-
   handlePointerEnter() {
     gsap.to('.block', {
       opacity: (i, target) => (target === this.block ? 1 : 0),
@@ -73,7 +70,6 @@ class Card {
       ease: 'power2.out',
     });
   }
-
   handlePointerLeave() {
     gsap.to('.block', {
       opacity: 1,
@@ -107,7 +103,6 @@ class Card {
 
 // Контейнер для карточек
 const container = document.getElementById('blocks-container');
-
 // Данные для карточек
 const cardsData = [
   {
@@ -129,7 +124,6 @@ const cardsData = [
     popupText: 'Эволюция кибериммунитета',
   },
 ];
-
 // Инициализация карточек
 cardsData.forEach((cardData) => {
   const card = new Card(cardData); 
