@@ -1,2 +1,1 @@
-# cards-animate
-GSAP, js
+# animated cards on GSAP js
