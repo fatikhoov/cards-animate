@@ -190,9 +190,10 @@ body {
     max-height: 300px; 
   }
 
-  .blocks-container {
+  .blocks-container .block {
     margin: 0 !important;
     width: 100% !important;
-  }
+    max-width: none !important;
+  } 
 
 }
