@@ -8,11 +8,14 @@ class Card {
     this.popupTextWrap = null; 
     this.popupTextElem = null; 
     this.titleElem = null; 
+    
+    this.scrollTimeout = null;
   }
   /**
    * Метод для рендера карточки
    * @param {HTMLElement} container
-   */
+   */ 
+  
   render(container) {
     const block = document.createElement('div');
     block.classList.add('block');
@@ -30,8 +33,8 @@ class Card {
 
     this.block = block;
     this.titleElem = block.querySelector('.block-title');
-    this.popupTextWrap = block.querySelector(`.popup-text`);
-    this.popupTextElem = block.querySelector(`.popup-text-invert`);
+    this.popupTextWrap = block.querySelector('.popup-text');
+    this.popupTextElem = block.querySelector('.popup-text-invert');
 
     this.addListeners();
   }
@@ -43,7 +46,7 @@ class Card {
     // События для документа и окна привязываем один раз
     if (!Card.globalListenersAdded) {
       document.addEventListener('mouseleave', () => this.resetCardsState());
-      window.addEventListener('scroll', () => this.resetCardsState());
+      window.addEventListener('scroll', () => this.handleScroll());
       Card.globalListenersAdded = true; // Флаг, чтобы избежать дублирования
     }
   }
@@ -116,10 +119,32 @@ class Card {
       ease: 'power2.out',
     });
   }
+ 
+
+handleScroll() {
+  // Сбрасываем состояние всех карточек
+  this.resetCardsState();
+
+  clearTimeout(this.scrollTimeout);
+    this.scrollTimeout = setTimeout(() => {
+      document.querySelectorAll('.block').forEach(block => {
+        block.addEventListener('pointerenter', () => 
+          this.handlePointerEnter(), { once: true }); 
+  });
+}, 100);
+}
+ 
 }
 
 // Контейнер для карточек
 const container = document.getElementById('blocks-container');
+
+// Инициализация карточек
+cardsData.forEach((cardData) => {
+  const card = new Card(cardData); 
+  card.render(container); 
+}); 
+
 // Данные для карточек
 const cardsData = [
   {
@@ -141,8 +166,3 @@ const cardsData = [
     popupText: 'Эволюция кибериммунитета',
   },
 ];
-// Инициализация карточек
-cardsData.forEach((cardData) => {
-  const card = new Card(cardData); 
-  card.render(container); 
-}); 
