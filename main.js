@@ -138,13 +138,6 @@ handleScroll() {
 
 // Контейнер для карточек
 const container = document.getElementById('blocks-container');
-
-// Инициализация карточек
-cardsData.forEach((cardData) => {
-  const card = new Card(cardData); 
-  card.render(container); 
-}); 
-
 // Данные для карточек
 const cardsData = [
   {
@@ -166,3 +159,8 @@ const cardsData = [
     popupText: 'Эволюция кибериммунитета',
   },
 ];
+// Инициализация карточек
+cardsData.forEach((cardData) => {
+  const card = new Card(cardData); 
+  card.render(container); 
+}); 
