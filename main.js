@@ -38,7 +38,53 @@ class Card {
 
   addListeners() {
     this.block.addEventListener('pointerenter', () => this.handlePointerEnter());
-    this.block.addEventListener('pointerleave', () => this.handlePointerLeave());
+    this.block.addEventListener('mouseleave', () => this.resetCardsState());
+    
+    // События для документа и окна привязываем один раз
+    if (!Card.globalListenersAdded) {
+      document.addEventListener('mouseleave', () => this.resetCardsState());
+      window.addEventListener('scroll', () => this.resetCardsState());
+      Card.globalListenersAdded = true; // Флаг, чтобы избежать дублирования
+    }
+  }
+  
+  resetCardsState() {
+    // Сброс прозрачности всех блоков
+    gsap.to(".block", {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power1.out",
+    });
+  
+    // Скрытие всех popup-text и их элементов
+    document.querySelectorAll(`.popup-text`).forEach(popup => {
+      gsap.to(popup, {
+        opacity: 0,
+        y: 0,
+        duration: 0.3,
+        ease: "power2.in",
+        visibility: "hidden",
+      });
+    });
+  
+    document.querySelectorAll(`.popup-text-invert`).forEach(popupText => {
+      gsap.to(popupText, {
+        opacity: 0,
+        y: 0,
+        duration: 0.3,
+        ease: "power2.in",
+      });
+    });
+  
+    // Возврат заголовков
+    document.querySelectorAll('.block-title').forEach(title => {
+      gsap.to(title, {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    });
   }
   handlePointerEnter() {
     gsap.to('.block', {
@@ -67,35 +113,6 @@ class Card {
       opacity: 0,
       y: -20,
       duration: 0.3,
-      ease: 'power2.out',
-    });
-  }
-  handlePointerLeave() {
-    gsap.to('.block', {
-      opacity: 1,
-      duration: 0.2,
-      ease: 'power1.in',
-    });
-    
-    gsap.to(this.popupTextElem, {
-      opacity: 0,
-      y: 0,
-      duration: 0.2,
-      ease: 'power2.in', 
-    });
-    
-    gsap.to(this.popupTextWrap, {
-      opacity: 0,
-      y: 0,
-      duration: 0.2,
-      ease: 'power2.in',
-      visibility: 'hidden',
-    });
-
-    gsap.to(this.titleElem, {
-      opacity: 1,
-      y: 0,
-      duration: 0.2,
       ease: 'power2.out',
     });
   }
