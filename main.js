@@ -153,8 +153,10 @@ const cardsData2 = [
 
 // Инициализация карточек
 cardsData.forEach((cardData) => {
-  const card = new Card(cardData);
-  const card2 = new Card(cardData2);
-  card.render(container);
-  card2.render(container);
+  const card = new Card(cardData); 
+  card.render(container); 
+});
+cardsData2.forEach((cardData) => {
+  const card = new Card(cardData); 
+  card.render(container); 
 });
