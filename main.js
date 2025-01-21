@@ -130,33 +130,8 @@ const cardsData = [
   },
 ];
 
-const cardsData2 = [
-  {
-    id: 'card-4',
-    image: 'https://files.masterkrasok.ru/v4/pictures/jBcU3AXkNmv3SDmgeb3xMePUrVNhqNv2TAPcQb3r.jpg',
-    title: 'МТС Лейбл. Айдентика',
-    popupText: 'Новые культурные явления',
-  },
-  {
-    id: 'card-5',
-    image: 'https://shop-cdn1-2.vigbo.tech/shops/175125/products/19013994/images/2-6e3847b7d72bcbe11793ad614a21d940.jpg?version=1',
-    title: 'TTMG. Корпоративный сайт',
-    popupText: 'Премиум в минимализме',
-  },
-  {
-    id: 'card-6',
-    image: 'https://www.jewish-museum.ru/upload/resize_cache/iblock/9ee/1400_920_1/0wxi3rizzt53zzouzj7idnro0v6lgzcy.jpg',
-    title: 'Kaspersky. Айдентика',
-    popupText: 'Эволюция кибериммунитета',
-  },
-];
-
 // Инициализация карточек
 cardsData.forEach((cardData) => {
   const card = new Card(cardData); 
   card.render(container); 
-});
-cardsData2.forEach((cardData) => {
-  const card = new Card(cardData); 
-  card.render(container); 
-});
+}); 
