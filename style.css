@@ -7,8 +7,8 @@
   --line-height: 119%;
   --letter-spacing: -0.02em;
   --transition-duration: 0.3s;
-  --z-index-popup: 99;
-  --background-color: rgb(229, 231, 235);
+  --text-padding-base: 8px;
+  --background-color: rgb(229 231 235 / 80%);
   --text-color: #333;
   --image-wrapper-margin-bottom: 16px;
   --image-wrapper-align: center;
@@ -39,7 +39,7 @@
 
 body {
   font-family: var(--font-family);
-  margin: 142px auto;
+  margin: 442px auto 0ы;
   padding: 0;
   background-color: var(--background-color);
 }
@@ -48,7 +48,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: var(--gap);
+  margin: calc(var(--gap) * 2) var(--gap);
   padding: 0;
   max-width: 1600px;
 }
@@ -100,47 +100,36 @@ body {
   text-align: center;
 }
 
-.text-title {
+.block-title {
+  padding: var(--text-padding-base);
+  color: var(--text-color);
+  font-size: calc(var(--font-size-base) * 1.5);
   font-weight: bold;
 }
 
 .popup-text {
-  visibility: hidden;
   position: fixed;
-  top: 0;
+  top: 40%;
   left: 0;
   right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
   text-align: center;
-  opacity: 0;
-  z-index: var(--popup-text-z-index);
-  transform: perspective(var(--popup-text-perspective));
-  perspective-origin: var(--popup-text-perspective-origin);
-  will-change: transform, opacity;
   pointer-events: none;
-}
-
-.popup-text-card-1,
-.popup-text-card-2,
-.popup-text-card-3 {
-  opacity: 0;
-  transform: rotate(0deg);
-  transform-origin: var(--popup-text-transform-origin);
-  transform-style: preserve-3d;
-  will-change: transform, opacity;
-  transition: opacity var(--transition-duration) ease, transform var(--transition-duration) ease;
+  opacity: 0; 
+  z-index: 9; 
 }
 
 .popup-text-invert {
-  font-size: var(--popup-text-font-size-desktop);
+  font-size: 48px;
   font-weight: bold;
-  letter-spacing: var(--popup-text-letter-spacing);
-  line-height: var(--popup-text-line-height);
+  color: #fff;
+  mix-blend-mode: difference; 
+  text-transform: uppercase;
+  line-height: 1.2;
+  display: inline-block;
+  z-index: 10; 
 }
- 
+
 
 .blocks-container .block:first-child {
   margin-left: 0;
@@ -197,3 +186,4 @@ body {
   } 
 
 }
+
