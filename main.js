@@ -73,8 +73,7 @@ class Card {
         gsap.to(popupText, {
         opacity: 0,
         y: 0,
-        duration: 0.1,
-        ease: "power2.in",
+        duration: 0,
         onComplete: () => {
           this.popupTextWrap.style.mixBlendMode = 'difference';
         },
@@ -96,8 +95,7 @@ class Card {
 handlePointerEnter() {
   gsap.to('.block', {
     opacity: (i, target) => (target === this.block ? 1 : 0),
-    duration: 0.3,
-    ease: 'power1.out',
+    duration: 0,
   });
 
   gsap.to(this.popupTextWrap, {
