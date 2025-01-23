@@ -8,8 +8,8 @@
   --letter-spacing: -0.02em;
   --transition-duration: 0.3s;
   --text-padding-base: 8px;
-  --background-color: rgb(229 231 235 / 80%);
-  --text-color: #333;
+  --background-color: #fff;
+  --text-color: #424242;
   --image-wrapper-margin-bottom: 16px;
   --image-wrapper-align: center;
   --image-placeholder-font-size: 14px;
@@ -120,13 +120,15 @@ body {
 }
 
 .popup-text-invert {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: bold;
   color: #fff;
   mix-blend-mode: difference; 
   text-transform: uppercase;
   line-height: 1.2;
   display: inline-block;
+  transform: translateY(142px);
+  will-change: auto;
   z-index: 10; 
 }
 

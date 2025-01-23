@@ -11,10 +11,7 @@ class Card {
     
     this.scrollTimeout = null;
   }
-  /**
-   * Метод для рендера карточки
-   * @param {HTMLElement} container
-   */ 
+  
   
   render(container) {
     const block = document.createElement('div');
@@ -38,20 +35,20 @@ class Card {
 
     this.addListeners();
   }
-
   addListeners() {
-    this.block.addEventListener('pointerenter', () => this.handleScroll());
+    this.block.addEventListener('mouseenter', (e) => this.handleScroll(e));
     this.block.addEventListener('mouseleave', () => this.resetCardsState());
     
     // События для документа и окна привязываем один раз
     if (!Card.globalListenersAdded) {
       document.addEventListener('mouseleave', () => this.resetCardsState());
-      window.addEventListener('scroll', () => this.handleScroll());
+      window.addEventListener('scroll', (e) => this.handleScroll(e));
       Card.globalListenersAdded = true; // Флаг, чтобы избежать дублирования
     }
   }
   
   resetCardsState() {
+
     // Сброс прозрачности всех блоков
     gsap.to(".block", {
       opacity: 1,
@@ -64,7 +61,6 @@ class Card {
       gsap.to(popup, {
         opacity: 0,
         y: 0,
-        zIndex: -1,
         duration: 0, 
       });
     });
@@ -73,10 +69,8 @@ class Card {
         gsap.to(popupText, {
         opacity: 0,
         y: 0,
-        duration: 0,
-        onComplete: () => {
-          this.popupTextWrap.style.mixBlendMode = 'difference';
-        },
+        duration: 0.1,
+        ease: "power4.out",
       });
     });
   
@@ -90,59 +84,66 @@ class Card {
       });
     });
   }
-
-
-handlePointerEnter() {
-  gsap.to('.block', {
-    opacity: (i, target) => (target === this.block ? 1 : 0),
-    duration: 0,
-  });
-
-  gsap.to(this.popupTextWrap, {
-    opacity: 1,
-    y: 0,
-    zIndex: 9,
-    duration: 0.3,
-    ease: 'power2.out', 
-  });
-  
-    gsap.to(this.popupTextElem, {
-      opacity: 1,
-      y: -20, 
-      duration: 0.2,
-      ease: "power2.out",
-      onComplete: () => {
-        this.popupTextWrap.style.mixBlendMode = 'difference';
-      },
+  handlePointerEnter() {
+    gsap.to('.block', {
+      opacity: (i, target) => (target === this.block ? 1 : 0),
+      duration: 0.1,
     });
-  
 
-  gsap.to(this.titleElem, {
-    opacity: 0,
-    y: -20,
-    duration: 0.3,
-    ease: 'power2.out',
-  });
-}
+     
+      gsap.to(this.popupTextElem, {
+        opacity: 1,
+        y: -20, 
+        duration: 0.1,
+        ease: "power2.in",
+        onComplete: () => {
+          this.popupTextWrap.style.mixBlendMode = 'difference';
+        },
+      });
 
-handleScroll() {
-  this.resetCardsState(); 
+      gsap.to(this.popupTextWrap, {
+        opacity: 1,
+        zIndex: 9,
+        duration: 1,
+        ease: "power4.out",
+        y: 0,
+        x: 0,
+        z: 0
+});
 
-  clearTimeout(this.scrollTimeout);
-
-  this.scrollTimeout = setTimeout(() => {
-    const blocks = document.querySelectorAll('.block');
-    blocks.forEach(block => {
-      if (this.isCursorInside(block)) {
-        // Если курсор на карточке, анимация
-        this.block = block;
-        this.titleElem = block.querySelector('.block-title');
-        this.popupTextWrap = block.querySelector('.popup-text');
-        this.popupTextElem = block.querySelector('.popup-text-invert');
-        this.handlePointerEnter(block);
-      }
+    gsap.to(this.titleElem, {
+      opacity: 0,
+      y: -20,
+      duration: 0.3,
+      ease: 'power2.out',
     });
-  }, 200); 
+  }
+
+handleScroll(e) {  
+  clearTimeout(this.scrollTimeout)
+  const runAnimating = (time) => {
+    this.scrollTimeout = setTimeout(() => {
+      const blocks = document.querySelectorAll('.block');
+      blocks.forEach(block => {
+        if (this.isCursorInside(block)) {
+          // Если курсор на карточке, анимация
+          this.block = block;
+          this.titleElem = block.querySelector('.block-title');
+          this.popupTextWrap = block.querySelector('.popup-text');
+          this.popupTextElem = block.querySelector('.popup-text-invert');
+          this.handlePointerEnter();
+        }
+      });
+    }, time);
+  }  
+  
+  if (e.type == 'mouseenter') {
+    runAnimating(200)
+  }
+  if (e.type === 'scroll') {
+    this.resetCardsState()
+    runAnimating(300) 
+  }
 }
 
 isCursorInside(block) {
