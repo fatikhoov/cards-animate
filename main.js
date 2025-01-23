@@ -1,7 +1,8 @@
 class Card {
-  constructor({ id, image, title, popupText }) {
+  constructor({ id, image, video, title, popupText }) {
     this.id = id;
     this.image = image;
+    this.video = video;
     this.title = title;
     this.popupText = popupText;
     
@@ -12,6 +13,8 @@ class Card {
     
     this.scrollTimeout = null;
     this.screenWidth = window.innerWidth;
+
+    this.animatingTime = 250;
   }
 
   render(container) {
@@ -19,13 +22,18 @@ class Card {
     block.classList.add('block');
     block.id = this.id;
 
-    block.innerHTML = `<div class="image-wrapper">
-    <img src="${this.image}" alt="Card Image/Video" class="image-placeholder" loading="lazy"/>
-  </div>
-  <h4 class="block-title"><strong>${this.title}</strong></h4>
-  <div class="popup-text">
-  <p class="popup-text-invert popup-text-${this.id}">${this.popupText}</p>
-  </div>`;
+    block.innerHTML = `
+    <div class="image-wrapper"> 
+     <div data-autoplay="true" data-loop="true" data-wf-ignore="true" class="video-placeholder">
+        <video loading="lazy" autoplay="autoplay" loop="loop" muted="muted" playsinline="" data-wf-ignore="true" data-object-fit="cover" class="lazyLoad isLoaded" poster="${this.image}">
+          <source data-wf-ignore="true" src="${this.video}">
+        </video>
+      </div>
+    </div>
+    <h4 class="block-title"><strong>${this.title}</strong></h4>
+    <div class="popup-text">
+      <p class="popup-text-invert popup-text-${this.id}">${this.popupText}</p>
+    </div>`;
 
     container.appendChild(block);
 
@@ -37,12 +45,12 @@ class Card {
     this.addListeners();
   }
   addListeners() {    
-    this.block.addEventListener('mouseenter', (e) => this.handleScroll(e));
-    this.block.addEventListener('mouseleave', () => this.resetCardsState());
+    this.block.addEventListener('mouseenter', (e) => this.handleTriggers(e));
+    this.block.addEventListener('mouseleave', (e) => this.handleTriggers(e));
     
     if (!Card.globalListenersAdded) {
-      document.addEventListener('mouseleave', () => this.resetCardsState());
-      window.addEventListener('scroll', (e) => this.handleScroll(e));
+      document.addEventListener('mouseleave', (e) => this.handleTriggers(e));
+      window.addEventListener('scroll', (e) => this.handleTriggers(e));
     
       Card.globalListenersAdded = true; // Флаг, чтобы избежать дублирования
     }
@@ -50,29 +58,35 @@ class Card {
   
   // ---------- СБРОС АНИМАЦИИ ----------
   resetCardsState() {
-
     // Сброс прозрачности всех блоков
     gsap.to(".block", {
       opacity: 1,
-      duration: 0.3,
-      ease: "power1.out",
+      duration: this.animatingTime/1250,
+      ease: "power1.in",
     });
   
     // Скрытие всех popup-text и их элементов
     document.querySelectorAll(`.popup-text`).forEach(popup => {
       gsap.to(popup, {
-        opacity: 0,
-        y: 0,
-        duration: 0, 
+        opacity: 0, 
+        duration: 0.3, 
+        ease: "power2.out",
       });
     });
   
     document.querySelectorAll('.popup-text-invert').forEach(popupText => {
         gsap.to(popupText, {
-        opacity: 0,
-        y: 0,
-        duration: 0.1,
-        ease: "power4.out",
+        opacity: 0, 
+        y: 84,
+        x: 0,
+        z: 0, 
+        scale3d: (1, 1, 1) ,
+        rotateX: (-45) ,
+        rotateY: (0) ,
+        rotateZ: (0) ,
+        skew: (0, 0),
+        duration: 0.4,
+        ease: "power2.out",
       });
     });
   
@@ -81,7 +95,7 @@ class Card {
       gsap.to(title, {
         opacity: 1,
         y: 0,
-        duration: 0.3,
+        duration: 0.5,
         ease: "power2.out",
       });
     });
@@ -90,40 +104,42 @@ class Card {
   handlePointerEnter() {    
     gsap.to('.block', {
       opacity: (i, target) => (target === this.block ? 1 : 0),
-      duration: 0.1,
+      duration: (i, target) => (target === this.block ? this.animatingTime/1500 : this.animatingTime/600),
+      ease: "power2.out",
     });
+    
     gsap.to(this.popupTextElem, {
-        opacity: 1,
-        y: -20, 
-        duration: 0.1,
-        ease: "power2.in",
-        onComplete: () => {
-          this.popupTextWrap.style.mixBlendMode = 'difference';
-        },
-    });
-    gsap.to(this.popupTextWrap, {
-        opacity: 1,
-        zIndex: 9,
-        duration: 1,
-        ease: "power4.out",
+        opacity: 1, 
         y: 0,
         x: 0,
-        z: 0
+        z: 0, 
+        scale3d: (1, 1, 1) ,
+        rotateX: (0) ,
+        rotateY: (0) ,
+        rotateZ: (0) ,
+        skew: (0, 0),
+        duration: this.animatingTime/700,
+        ease: "power1.out", 
+    });
+    gsap.to(this.popupTextWrap, {
+        opacity: 1, 
+        duration: this.animatingTime/700,
+        ease: "power1.out", 
     });
     gsap.to(this.titleElem, {
-      opacity: 0,
-      y: -20,
+      opacity: 0, 
       duration: 0.3,
       ease: 'power2.out',
     });
+     
   }
   // ---------- УСЛОВИЯ ----------
-  handleScroll(e) {   
+  handleTriggers(e) {   
     // если экран больше 640px
     // если курсор зашел на карточку - с проверкой где остановился курсор
     // если был скролл - с проверкой где остановился курсор
+    // если курсор вышел из карточки - с проверкой где остановился курсор
     if (this.screenWidth > 640) {
-      clearTimeout(this.scrollTimeout)
       
       const runAnimating = (time) => {
         this.scrollTimeout = setTimeout(() => {
@@ -140,12 +156,27 @@ class Card {
           });
         }, time);
       }  
-      if (e && e.type === 'mouseenter') {
-        runAnimating(200)
-      }
-      if (e && e.type === 'scroll') {
+      if (e && e.type === 'mouseenter') { 
         this.resetCardsState()
-        runAnimating(300) 
+        clearTimeout(this.scrollTimeout)
+        runAnimating(this.animatingTime*1.6)
+      }
+      if (e && e.type === 'scroll') { 
+        this.resetCardsState()
+        clearTimeout(this.scrollTimeout)
+        runAnimating(this.animatingTime*2) 
+      }
+      if (e && e.type === 'mouseleave') {
+        
+        clearTimeout(this.scrollTimeout)
+        this.scrollTimeout = setTimeout(() => {
+          const blocks = document.querySelectorAll('.block');
+          blocks.forEach(block => {
+            if (!this.isCursorInside(block)) {
+              this.resetCardsState();
+            }
+          })
+        }, this.animatingTime*0.5);
       }
     }
   }
@@ -168,18 +199,21 @@ const cardsData = [
   {
     id: 'card-1',
     image: 'https://files.masterkrasok.ru/v4/pictures/jBcU3AXkNmv3SDmgeb3xMePUrVNhqNv2TAPcQb3r.jpg',
+    video: 'https://ony-ru-media.storage.yandexcloud.net/_Ony_new-site/untitled%20folder%205/pillow.mp4',
     title: 'МТС Лейбл. Айдентика',
     popupText: 'Новые культурные явления',
   },
   {
     id: 'card-2',
     image: 'https://shop-cdn1-2.vigbo.tech/shops/175125/products/19013994/images/2-6e3847b7d72bcbe11793ad614a21d940.jpg?version=1',
+    video: 'https://ony-ru-media.storage.yandexcloud.net/_Ony_new-site/video_covers_for_cases/Preview_TTMG.mp4',
     title: 'TTMG. Корпоративный сайт',
     popupText: 'Премиум в минимализме',
   },
   {
     id: 'card-3',
     image: 'https://www.jewish-museum.ru/upload/resize_cache/iblock/9ee/1400_920_1/0wxi3rizzt53zzouzj7idnro0v6lgzcy.jpg',
+    video: 'https://ony-ru-media.storage.yandexcloud.net/untitled%20folder%204/untitled%20folder%2012/Cover-Main.mp4',
     title: 'Kaspersky. Айдентика',
     popupText: 'Эволюция кибериммунитета',
   },
