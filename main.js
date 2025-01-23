@@ -4,6 +4,7 @@ class Card {
     this.image = image;
     this.title = title;
     this.popupText = popupText;
+    
     this.block = null; 
     this.popupTextWrap = null; 
     this.popupTextElem = null; 
@@ -11,10 +12,8 @@ class Card {
     
     this.scrollTimeout = null;
     this.screenWidth = window.innerWidth;
-
   }
-  
-  
+
   render(container) {
     const block = document.createElement('div');
     block.classList.add('block');
@@ -23,9 +22,9 @@ class Card {
     block.innerHTML = `<div class="image-wrapper">
     <img src="${this.image}" alt="Card Image/Video" class="image-placeholder" loading="lazy"/>
   </div>
-  <div class="block-title">${this.title}</div>
+  <h4 class="block-title"><strong>${this.title}</strong></h4>
   <div class="popup-text">
-  <div class="popup-text-invert popup-text-${this.id}">${this.popupText}</div>
+  <p class="popup-text-invert popup-text-${this.id}">${this.popupText}</p>
   </div>`;
 
     container.appendChild(block);
@@ -44,10 +43,12 @@ class Card {
     if (!Card.globalListenersAdded) {
       document.addEventListener('mouseleave', () => this.resetCardsState());
       window.addEventListener('scroll', (e) => this.handleScroll(e));
+    
       Card.globalListenersAdded = true; // Флаг, чтобы избежать дублирования
     }
   }
   
+  // ---------- СБРОС АНИМАЦИИ ----------
   resetCardsState() {
 
     // Сброс прозрачности всех блоков
@@ -85,6 +86,7 @@ class Card {
       });
     });
   }
+  // ---------- АНИМАЦИЯ ----------
   handlePointerEnter() {    
     gsap.to('.block', {
       opacity: (i, target) => (target === this.block ? 1 : 0),
@@ -115,60 +117,53 @@ class Card {
       ease: 'power2.out',
     });
   }
+  // ---------- УСЛОВИЯ ----------
+  handleScroll(e) {   
+    // если экран больше 640px
+    // если курсор зашел на карточку - с проверкой где остановился курсор
+    // если был скролл - с проверкой где остановился курсор
+    if (this.screenWidth > 640) {
+      clearTimeout(this.scrollTimeout)
+      
+      const runAnimating = (time) => {
+        this.scrollTimeout = setTimeout(() => {
+          const blocks = document.querySelectorAll('.block');
+          blocks.forEach(block => {
+            if (this.isCursorInside(block)) {
+              // Если курсор на карточке, анимация
+              this.block = block;
+              this.titleElem = block.querySelector('.block-title');
+              this.popupTextWrap = block.querySelector('.popup-text');
+              this.popupTextElem = block.querySelector('.popup-text-invert');
+              this.handlePointerEnter();
+            }
+          });
+        }, time);
+      }  
+      if (e && e.type === 'mouseenter') {
+        runAnimating(200)
+      }
+      if (e && e.type === 'scroll') {
+        this.resetCardsState()
+        runAnimating(300) 
+      }
+    }
+  }
 
-handleScroll(e) {  
-  //-------УСЛОВИЯ-------------
-  // если экран больше 640px
-  // если курсор зашел на карточку - с проверкой где остановился курсор
-  // если был скролл - с проверкой где остановился курсор
-  if (this.screenWidth > 640) {
-    clearTimeout(this.scrollTimeout)
-    
-    const runAnimating = (time) => {
-      this.scrollTimeout = setTimeout(() => {
-        const blocks = document.querySelectorAll('.block');
-        blocks.forEach(block => {
-          if (this.isCursorInside(block)) {
-            // Если курсор на карточке, анимация
-            this.block = block;
-            this.titleElem = block.querySelector('.block-title');
-            this.popupTextWrap = block.querySelector('.popup-text');
-            this.popupTextElem = block.querySelector('.popup-text-invert');
-            this.handlePointerEnter();
-          }
-        });
-      }, time);
-    }  
-    
-    if (e.type == 'mouseenter') {
-      runAnimating(200)
-    }
-    if (e.type === 'scroll') {
-      this.resetCardsState()
-      runAnimating(300) 
-    }
+  // ---------- курсор на карточке? да/нет ----------
+  isCursorInside(block) {
+    const rect = block.getBoundingClientRect();
+    return mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;
   }
 }
 
-isCursorInside(block) {
-  const rect = block.getBoundingClientRect();
-  return mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;
-}
-}
-
-// Контейнер для карточек
 const container = document.getElementById('blocks-container');
-
-// Глобальные переменные для позиции курсора
 window.mouseX = 0;
 window.mouseY = 0;
-
-// Отслеживаем позицию мыши
 document.addEventListener('mousemove', (event) => {
 window.mouseX = event.clientX;
 window.mouseY = event.clientY;
 });
-// Данные для карточек
 const cardsData = [
   {
     id: 'card-1',
@@ -189,11 +184,7 @@ const cardsData = [
     popupText: 'Эволюция кибериммунитета',
   },
 ];
-// Инициализация карточек
 cardsData.forEach((cardData) => {
   const card = new Card(cardData); 
   card.render(container); 
-}); 
-
-
-
+});

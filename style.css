@@ -52,8 +52,9 @@ body {
   padding: 0;
   max-width: 1600px;
 }
-hr {
-  border: calc(var(--gap) * 2) solid #ddd;
+p, h4 {
+  margin: 0;
+  padding: 0;
 }
 .block {
   position: relative;
@@ -106,7 +107,6 @@ hr {
   padding: var(--text-padding-base);
   color: var(--text-color);
   font-size: calc(var(--font-size-base) * 1.5);
-  font-weight: bold;
 }
 
 .popup-text {
