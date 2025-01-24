@@ -134,7 +134,9 @@ class Card {
      
   }
   // ---------- УСЛОВИЯ ----------
-  handleTriggers(e) {   
+  handleTriggers(e) {  
+    this.resetCardsState();
+ 
     // если экран больше 640px
     // если курсор зашел на карточку - с проверкой где остановился курсор
     // если был скролл - с проверкой где остановился курсор
@@ -156,19 +158,16 @@ class Card {
           });
         }, time);
       }  
-      if (e && e.type === 'mouseenter') { 
-        this.resetCardsState()
+      if (e && e.type === 'mouseenter') {  
         clearTimeout(this.scrollTimeout)
-        runAnimating(this.animatingTime*1.6)
+        runAnimating(this.animatingTime*0.9)
       }
-      if (e && e.type === 'scroll') { 
-        this.resetCardsState()
+      if (e && e.type === 'scroll') {  
         clearTimeout(this.scrollTimeout)
         runAnimating(this.animatingTime*2) 
       }
       if (e && e.type === 'mouseleave') {
-        
-        clearTimeout(this.scrollTimeout)
+         
         this.scrollTimeout = setTimeout(() => {
           const blocks = document.querySelectorAll('.block');
           blocks.forEach(block => {
