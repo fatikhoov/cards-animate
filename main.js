@@ -165,7 +165,7 @@ class Card {
       }
       if (e && e.type === 'scroll') {  
         clearTimeout(this.scrollTimeout)
-        runAnimating(this.animatingTime) 
+        runAnimating(this.animatingTime*2) 
       }
       if (e && e.type === 'mouseleave') { 
           const blocks = document.querySelectorAll('.block');
