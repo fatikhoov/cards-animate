@@ -1,3 +1,5 @@
+ 
+
 class Card {
   constructor({ id, image, video, title, popupText }) {
     this.id = id;
@@ -14,7 +16,7 @@ class Card {
     this.scrollTimeout = null;
     this.screenWidth = window.innerWidth;
 
-    this.animatingTime = 250;
+    this.animatingTime = 200;
   }
 
   render(container) {
@@ -61,8 +63,8 @@ class Card {
     // Сброс прозрачности всех блоков
     gsap.to(".block", {
       opacity: 1,
-      duration: this.animatingTime/1250,
-      ease: "power1.in",
+      duration: this.animatingTime/800,
+      ease: "power1.in", 
     });
   
     // Скрытие всех popup-text и их элементов
@@ -80,12 +82,10 @@ class Card {
         y: 84,
         x: 0,
         z: 0, 
-        scale3d: (1, 1, 1) ,
         rotateX: (-45) ,
         rotateY: (0) ,
         rotateZ: (0) ,
-        skew: (0, 0),
-        duration: 0.4,
+         duration: 0.4,
         ease: "power2.out",
       });
     });
@@ -104,8 +104,8 @@ class Card {
   handlePointerEnter() {    
     gsap.to('.block', {
       opacity: (i, target) => (target === this.block ? 1 : 0),
-      duration: (i, target) => (target === this.block ? this.animatingTime/1500 : this.animatingTime/600),
-      ease: "power2.out",
+      duration: (i, target) => (target === this.block ? 0 : this.animatingTime/1000),
+      ease: "power2.out", 
     });
     
     gsap.to(this.popupTextElem, {
@@ -113,11 +113,9 @@ class Card {
         y: 0,
         x: 0,
         z: 0, 
-        scale3d: (1, 1, 1) ,
         rotateX: (0) ,
         rotateY: (0) ,
         rotateZ: (0) ,
-        skew: (0, 0),
         duration: this.animatingTime/700,
         ease: "power1.out", 
     });
@@ -136,13 +134,8 @@ class Card {
   // ---------- УСЛОВИЯ ----------
   handleTriggers(e) {  
     this.resetCardsState();
- 
-    // если экран больше 640px
-    // если курсор зашел на карточку - с проверкой где остановился курсор
-    // если был скролл - с проверкой где остановился курсор
-    // если курсор вышел из карточки - с проверкой где остановился курсор
-    if (this.screenWidth > 640) {
-      
+
+    if (this.screenWidth > 640) {  
       const runAnimating = (time) => {
         this.scrollTimeout = setTimeout(() => {
           const blocks = document.querySelectorAll('.block');
@@ -157,26 +150,33 @@ class Card {
             }
           });
         }, time);
-      }  
-      if (e && e.type === 'mouseenter') {  
-        clearTimeout(this.scrollTimeout)
-        runAnimating(this.animatingTime*0.9)
-      }
-      if (e && e.type === 'scroll') {  
-        clearTimeout(this.scrollTimeout)
-        runAnimating(this.animatingTime*2) 
-      }
-      if (e && e.type === 'mouseleave') {
-         
-        this.scrollTimeout = setTimeout(() => {
+        if (e && e.type === 'mouseleave') { 
           const blocks = document.querySelectorAll('.block');
           blocks.forEach(block => {
             if (!this.isCursorInside(block)) {
               this.resetCardsState();
             }
-          })
-        }, this.animatingTime*0.5);
+          }) 
       }
+      }  
+      if (e && e.type === 'mouseenter') {  
+        clearTimeout(this.scrollTimeout)
+        runAnimating(this.animatingTime)
+      }
+      if (e && e.type === 'scroll') {  
+        clearTimeout(this.scrollTimeout)
+        runAnimating(this.animatingTime) 
+      }
+      if (e && e.type === 'mouseleave') { 
+          const blocks = document.querySelectorAll('.block');
+          blocks.forEach(block => {
+            if (!this.isCursorInside(block)) {
+              this.resetCardsState();
+            }
+          }) 
+      }
+
+        
     }
   }
 
