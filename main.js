@@ -66,12 +66,11 @@ class Card {
       duration: this.animatingTime/800,
       ease: "power1.in", 
     });
-  
-    // Скрытие всех popup-text и их элементов
+   
     document.querySelectorAll(`.popup-text`).forEach(popup => {
       gsap.to(popup, {
         opacity: 0, 
-        duration: 0.3, 
+        duration: this.animatingTime/450, 
         ease: "power2.out",
       });
     });
@@ -79,14 +78,15 @@ class Card {
     document.querySelectorAll('.popup-text-invert').forEach(popupText => {
         gsap.to(popupText, {
         opacity: 0, 
-        y: 84,
-        x: 0,
-        z: 0, 
-        rotateX: (-45) ,
-        rotateY: (0) ,
-        rotateZ: (0) ,
-         duration: 0.4,
+        y: -84,
+        rotateX: -45,
+        duration: this.animatingTime/450,
         ease: "power2.out",
+        onComplete: () => (
+          gsap.set(popupText, { 
+            y: 84,
+          })
+        )
       });
     });
   
@@ -108,20 +108,21 @@ class Card {
       ease: "power2.out", 
     });
     
-    gsap.to(this.popupTextElem, {
-        opacity: 1, 
-        y: 0,
-        x: 0,
-        z: 0, 
-        rotateX: (0) ,
-        rotateY: (0) ,
-        rotateZ: (0) ,
-        duration: this.animatingTime/700,
-        ease: "power1.out", 
-    });
+    gsap.fromTo(this.popupTextElem, {
+      opacity: 0, 
+      y: 84,
+      rotateX: -45,
+    }, {
+      opacity: 1, 
+      y: 0,
+      rotateX: 0,
+      duration: this.animatingTime/500,
+      ease: "power1.out", 
+      }
+    );
     gsap.to(this.popupTextWrap, {
         opacity: 1, 
-        duration: this.animatingTime/700,
+        duration: this.animatingTime/500,
         ease: "power1.out", 
     });
     gsap.to(this.titleElem, {
