@@ -60,27 +60,31 @@ class Card {
   
   // ---------- СБРОС АНИМАЦИИ ----------
   resetCardsState() {
+    gsap.killTweensOf('.block');
+  
     // Сброс прозрачности всех блоков
     gsap.to(".block", {
       opacity: 1,
-      duration: this.animatingTime/800,
+      duration: this.animatingTime/500,
       ease: "power1.in", 
     });
    
     document.querySelectorAll(`.popup-text`).forEach(popup => {
+      gsap.killTweensOf(popup);
       gsap.to(popup, {
         opacity: 0, 
-        duration: this.animatingTime/450, 
+        duration: this.animatingTime/300, 
         ease: "power2.out",
       });
     });
   
     document.querySelectorAll('.popup-text-invert').forEach(popupText => {
-        gsap.to(popupText, {
+      gsap.killTweensOf(popupText);
+      gsap.to(popupText, {
         opacity: 0, 
         y: -84,
         rotateX: -45,
-        duration: this.animatingTime/450,
+        duration: this.animatingTime/300,
         ease: "power2.out",
         onComplete: () => (
           gsap.set(popupText, { 
@@ -92,19 +96,22 @@ class Card {
   
     // Возврат заголовков
     document.querySelectorAll('.block-title').forEach(title => {
+      gsap.killTweensOf(title);
       gsap.to(title, {
         opacity: 1,
         y: 0,
-        duration: 0.5,
+        duration: this.animatingTime/300,
         ease: "power2.out",
       });
     });
   }
   // ---------- АНИМАЦИЯ ----------
-  handlePointerEnter() {    
+  handlePointerEnter() { 
+    gsap.killTweensOf('.block');
+     
     gsap.to('.block', {
       opacity: (i, target) => (target === this.block ? 1 : 0),
-      duration: (i, target) => (target === this.block ? 0 : this.animatingTime/1000),
+      duration: (i, target) => (target === this.block ? 0 : this.animatingTime/800),
       ease: "power2.out", 
     });
     
@@ -116,18 +123,18 @@ class Card {
       opacity: 1, 
       y: 0,
       rotateX: 0,
-      duration: this.animatingTime/500,
+      duration: this.animatingTime/400,
       ease: "power1.out", 
       }
     );
     gsap.to(this.popupTextWrap, {
         opacity: 1, 
-        duration: this.animatingTime/500,
+        duration: this.animatingTime/400,
         ease: "power1.out", 
     });
     gsap.to(this.titleElem, {
       opacity: 0, 
-      duration: 0.3,
+      duration: this.animatingTime/800,
       ease: 'power2.out',
     });
      
@@ -151,14 +158,7 @@ class Card {
             }
           });
         }, time);
-        if (e && e.type === 'mouseleave') { 
-          const blocks = document.querySelectorAll('.block');
-          blocks.forEach(block => {
-            if (!this.isCursorInside(block)) {
-              this.resetCardsState();
-            }
-          }) 
-      }
+       
       }  
       if (e && e.type === 'mouseenter') {  
         clearTimeout(this.scrollTimeout)
