@@ -8,7 +8,7 @@ class CardList {
 
   async render() { 
     try {
-      const response = await fetch('src/data/cardsData.json');
+      const response = await fetch('cards-animated/src/data/cardsData.json');
       const cardsData = await response.json();
 
       this.container.innerHTML = '';
