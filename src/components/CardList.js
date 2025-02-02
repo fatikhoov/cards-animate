@@ -9,7 +9,7 @@ class CardList {
 
   async render() { 
     try {
-      const response = await fetch('./data/cardsData.json');  // Загрузка данных из JSON
+      const response = await fetch('src/data/cardsData.json');  // Загрузка данных из JSON
       const cardsData = await response.json();  // Преобразуем в формат JavaScript
 
       this.container.innerHTML = '';  // Очистка контейнера перед рендером

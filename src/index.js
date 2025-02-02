@@ -1,5 +1,3 @@
-// src/index.js
-
 import CardList from './components/CardList.js';
 
 document.addEventListener('DOMContentLoaded', () => {

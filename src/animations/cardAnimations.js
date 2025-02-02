@@ -1,8 +1,9 @@
 
 const animationSettings = {
-    opacityDuration: 0.2,
+  opacityDuration: 0.01,
+  opacityDurationActive: 0.3,
     popupTextDuration: 0.6,
-    titleDuration: 0.2,
+    titleDuration: 0.3,
     easing: "power1.out",
   };
   
@@ -51,7 +52,7 @@ const animationSettings = {
     gsap.killTweensOf('.block');
     gsap.to('.block', {
       opacity: (i, el) => (el === target ? 1 : 0),
-      duration: animationSettings.opacityDuration,
+      duration: animationSettings.opacityDurationActive,
       ease: animationSettings.easing,
     });
 
