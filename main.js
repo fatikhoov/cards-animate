@@ -54,15 +54,13 @@ class Card {
       document.addEventListener('mouseleave', (e) => this.handleTriggers(e));
       window.addEventListener('scroll', (e) => this.handleTriggers(e));
     
-      Card.globalListenersAdded = true; // Флаг, чтобы избежать дублирования
+      Card.globalListenersAdded = true;
     }
   }
   
-  // ---------- СБРОС АНИМАЦИИ ----------
   resetCardsState() {
     gsap.killTweensOf('.block');
   
-    // Сброс прозрачности всех блоков
     gsap.to(".block", {
       opacity: 1,
       duration: this.animatingTime/500,
@@ -94,7 +92,6 @@ class Card {
       });
     });
   
-    // Возврат заголовков
     document.querySelectorAll('.block-title').forEach(title => {
       gsap.killTweensOf(title);
       gsap.to(title, {
@@ -105,7 +102,6 @@ class Card {
       });
     });
   }
-  // ---------- АНИМАЦИЯ ----------
   handlePointerEnter() { 
     gsap.killTweensOf('.block');
      
@@ -139,7 +135,6 @@ class Card {
     });
      
   }
-  // ---------- УСЛОВИЯ ----------
   handleTriggers(e) {  
     this.resetCardsState();
 
@@ -149,7 +144,6 @@ class Card {
           const blocks = document.querySelectorAll('.block');
           blocks.forEach(block => {
             if (this.isCursorInside(block)) {
-              // Если курсор на карточке, анимация
               this.block = block;
               this.titleElem = block.querySelector('.block-title');
               this.popupTextWrap = block.querySelector('.popup-text');
@@ -181,7 +175,6 @@ class Card {
     }
   }
 
-  // ---------- курсор на карточке? да/нет ----------
   isCursorInside(block) {
     const rect = block.getBoundingClientRect();
     return mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;

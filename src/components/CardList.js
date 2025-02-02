@@ -1,6 +1,5 @@
-// src/components/CardList.js
 
-import Card from './Card.js';  // Импорт компонента Card
+import Card from './Card.js';
 
 class CardList {
   constructor(container) {
@@ -9,17 +8,17 @@ class CardList {
 
   async render() { 
     try {
-      const response = await fetch('src/data/cardsData.json');  // Загрузка данных из JSON
-      const cardsData = await response.json();  // Преобразуем в формат JavaScript
+      const response = await fetch('src/data/cardsData.json');
+      const cardsData = await response.json();
 
-      this.container.innerHTML = '';  // Очистка контейнера перед рендером
+      this.container.innerHTML = '';
 
       cardsData.forEach(data => {
-        const card = new Card(data);  // Создание новой карточки
-        this.container.appendChild(card.render());  // Добавление карточки в контейнер
+        const card = new Card(data);
+        this.container.appendChild(card.render());
       });
     } catch (error) {
-      console.error('Ошибка загрузки данных:', error);  // Логирование ошибок
+      console.error('Ошибка загрузки данных:', error);
     } finally {
     console.log('рендер закончен')
     }

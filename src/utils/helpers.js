@@ -1,4 +1,3 @@
-// src/utils/helpers.js
 
 export function isCursorInside(cardElement, cursorX, cursorY) {
     const rect = cardElement.getBoundingClientRect();
