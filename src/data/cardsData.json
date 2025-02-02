@@ -1,0 +1,24 @@
+[
+    {
+      "id": "card-1",
+      "image": "https://files.masterkrasok.ru/v4/pictures/jBcU3AXkNmv3SDmgeb3xMePUrVNhqNv2TAPcQb3r.jpg",
+      "video": "https://ony-ru-media.storage.yandexcloud.net/_Ony_new-site/untitled%20folder%205/pillow.mp4",
+      "title": "МТС Лейбл. Айдентика",
+      "popupText": "Новые культурные явления"
+    },
+    {
+      "id": "card-2",
+      "image": "https://shop-cdn1-2.vigbo.tech/shops/175125/products/19013994/images/2-6e3847b7d72bcbe11793ad614a21d940.jpg?version=1",
+      "video": "https://ony-ru-media.storage.yandexcloud.net/_Ony_new-site/video_covers_for_cases/Preview_TTMG.mp4",
+      "title": "TTMG. Корпоративный сайт",
+      "popupText": "Премиум в минимализме"
+    },
+    {
+      "id": "card-3",
+      "image": "https://www.jewish-museum.ru/upload/resize_cache/iblock/9ee/1400_920_1/0wxi3rizzt53zzouzj7idnro0v6lgzcy.jpg",
+      "video": "https://ony-ru-media.storage.yandexcloud.net/untitled%20folder%204/untitled%20folder%2012/Cover-Main.mp4",
+      "title": "Kaspersky. Айдентика",
+      "popupText": "Эволюция кибериммунитета"
+    }
+  ]
+  
