@@ -1,4 +1,4 @@
-import CardList from 'cards-animated/src/components/CardList.js';
+import CardList from '@/src/components/CardList.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 console.log('DOM готов к работе')
