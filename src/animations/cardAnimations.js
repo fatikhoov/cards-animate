@@ -1,9 +1,9 @@
 
 const animationSettings = {
-  opacityDuration: 0.01,
-  opacityDurationActive: 0.3,
-    popupTextDuration: 0.6,
-    titleDuration: 0.3,
+  opacityDuration: 0.4,
+  opacityDurationActive: 0.2,
+    popupTextDuration: 0.8,
+    titleDuration: 0.4,
     easing: "power1.out",
   };
   
@@ -16,23 +16,23 @@ const animationSettings = {
     gsap.to(".block", {
       opacity: 1,
       duration: animationSettings.opacityDuration,
-      ease: "power1.in",
+      ease: animationSettings.easing,
     });
    
-      gsap.killTweensOf(".popup-text");
+     /*  gsap.killTweensOf(".popup-text");
       gsap.to(".popup-text", {
         opacity: 0,
         duration: animationSettings.popupTextDuration,
-        ease: "power1.out",
-      });
+        ease: animationSettings.easing,
+      }); */
   
       gsap.killTweensOf('.popup-text-invert');
       gsap.to('.popup-text-invert', {
         opacity: 0,
-        y: -184,
+        y: -120,
         rotateX: -45, 
         duration: animationSettings.popupTextDuration,
-        ease: "power1.out",
+        ease: animationSettings.easing,
       });
   
      gsap.killTweensOf('.block-title');
@@ -56,28 +56,29 @@ const animationSettings = {
       ease: animationSettings.easing,
     });
 
-    gsap.killTweensOf(popup);
-    gsap.to(popup, {
+   /*  gsap.killTweensOf(popup);
+    gsap.fromTo(popup, {
+      opacity: 0.5,  
+    },
+    {
       opacity: 1,
       y: 0,
-      rotateX: 0,
-      duration: animationSettings.popupTextDuration / 1.5,
-      ease: "power1.out",
-    });
+      rotateX: 0,  
+      duration: animationSettings.popupTextDuration,
+    ease: animationSettings.easing,
+    }); */
      
     gsap.killTweensOf(popupText);
     gsap.fromTo(popupText, {
-        opacity: 0, 
-        y: 84,
-        rotateX: -45,
-        delay: 0.2,
-        duration: animationSettings.popupTextDuration * 1.5,
+        opacity: 0.7, 
+        y: 120,
+        rotateX: -45,  
       }, {
         opacity: 1, 
         y: 0,
-        rotateX: 0,
-        duration: animationSettings.popupTextDuration * 1.5,
-      ease: "power4.out", 
+        rotateX: 0, 
+        duration: animationSettings.popupTextDuration,
+      ease: animationSettings.easing,
         }
       );
     

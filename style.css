@@ -80,8 +80,7 @@ p, h4 {
   right: -40px;
   bottom: -40px;
   left: -40px;
-  background-color: transparent;
-  z-index: -1;
+  background-color: transparent; 
   pointer-events: none;
 }
 
@@ -133,17 +132,19 @@ p, h4 {
   align-items: center;
   justify-content: center;
   text-align: center;
-  pointer-events: none;
-  opacity: 0; 
+  pointer-events: none; 
   transform: perspective(2000px);
   perspective-origin: 50% 50%;
-    z-index: 99; 
+    z-index: 19; 
   color: #fff;
   mix-blend-mode: difference;
+  transform: translateZ(0);
+  will-change: color, transform;
 }
 
 .popup-text-invert {
-  font-size: 5em;
+  opacity: 0;
+  font-size: 3.5em;
   font-weight: bold; 
   text-transform: uppercase;
   line-height: 1.2;
@@ -151,6 +152,9 @@ p, h4 {
   transform: translate3d(0px, 84px, 0px) scale3d(1, 1, 1) rotateX(-45deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d; 
   pointer-events: none;
+  backface-visibility: hidden;
+  z-index: 20; 
+  will-change: color, transform;
 }
 
 

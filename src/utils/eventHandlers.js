@@ -15,6 +15,7 @@ document.addEventListener('mousemove', (event) => {
 export function handleCardHover(event) {  
     currentTarget = event.currentTarget 
     animateCardHover(event.currentTarget);
+    
     clearTimeout(scrollTimeoutInter)
     scrollTimeoutInter = setTimeout(() => {
       isFirstActive = false
@@ -49,7 +50,7 @@ export function handleGlobalScroll() {
             isFirstActive = false;
           }
         })
-      }, 200);
+      }, 400);
     } catch (error) {
     console.log(error)
     } 
