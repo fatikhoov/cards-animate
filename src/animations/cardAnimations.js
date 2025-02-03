@@ -19,15 +19,15 @@ const animationSettings = {
       ease: "power1.in",
     });
    
-      gsap.killTweensOf(popup);
-      gsap.to(popup, {
+      gsap.killTweensOf(".popup-text");
+      gsap.to(".popup-text", {
         opacity: 0,
         duration: animationSettings.popupTextDuration,
         ease: "power1.out",
       });
   
-      gsap.killTweensOf(popupText);
-      gsap.to(popupText, {
+      gsap.killTweensOf('.popup-text-invert');
+      gsap.to('.popup-text-invert', {
         opacity: 0,
         y: -184,
         rotateX: -45, 
