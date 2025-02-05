@@ -69,10 +69,10 @@ class Card {
 
   addListeners(cardElement) {
     cardElement.addEventListener('mouseenter',(e) => handleCardHover(e));
-    cardElement.addEventListener('mouseleave',(e) => handleCardLeave(e)); 
+    cardElement.addEventListener('mouseleave',() => handleCardLeave()); 
 
     if (!Card.globalListenersAdded) {
-      document.addEventListener('mouseleave',(e) => handleGlobalMouseLeave(e));
+      document.addEventListener('mouseleave',() => handleGlobalMouseLeave());
       window.addEventListener('scroll',() => handleGlobalScroll());
       Card.globalListenersAdded = true;
     }

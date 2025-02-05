@@ -1,37 +1,27 @@
 
 const animationSettings = {
-  opacityDuration: 0.4,
-  opacityDurationActive: 0.2,
-    popupTextDuration: 0.8,
+  opacityDuration: 0.6,
+  opacityDurationActive: 0.6,
+    popupTextDuration: 0.6,
     titleDuration: 0.4,
     easing: "power1.out",
   };
   
-  function resetCardAnimation(target) {
-    let popup, popupText
-    popup = target.querySelector(".popup-text")
-    popupText = target.querySelector('.popup-text-invert') 
+  function resetCardAnimation() {
 
     gsap.killTweensOf(".block");
     gsap.to(".block", {
-      opacity: 1,
+      visibility: 'visible',
       duration: animationSettings.opacityDuration,
-      ease: animationSettings.easing,
+      ease: 'ease',
     });
-   
-     /*  gsap.killTweensOf(".popup-text");
-      gsap.to(".popup-text", {
-        opacity: 0,
-        duration: animationSettings.popupTextDuration,
-        ease: animationSettings.easing,
-      }); */
   
       gsap.killTweensOf('.popup-text-invert');
       gsap.to('.popup-text-invert', {
         opacity: 0,
-        y: -120,
-        rotateX: -45, 
-        duration: animationSettings.popupTextDuration,
+        y: -64,
+        rotateX: -45,  
+        duration: animationSettings.popupTextDuration / 2,
         ease: animationSettings.easing,
       });
   
@@ -51,32 +41,25 @@ const animationSettings = {
 
     gsap.killTweensOf('.block');
     gsap.to('.block', {
-      opacity: (i, el) => (el === target ? 1 : 0),
+      visibility: (i, el) => (el === target ? '' : 'hidden'),
       duration: animationSettings.opacityDurationActive,
-      ease: animationSettings.easing,
+      ease: 'ease',
     });
 
-   /*  gsap.killTweensOf(popup);
-    gsap.fromTo(popup, {
-      opacity: 0.5,  
-    },
-    {
-      opacity: 1,
-      y: 0,
-      rotateX: 0,  
-      duration: animationSettings.popupTextDuration,
-    ease: animationSettings.easing,
-    }); */
-     
     gsap.killTweensOf(popupText);
     gsap.fromTo(popupText, {
-        opacity: 0.7, 
-        y: 120,
-        rotateX: -45,  
+        opacity: 0,
+        y: 64,
+        rotateX: 90,  
+        delay: 0.4,
       }, {
-        opacity: 1, 
-        y: 0,
+        opacity: 1,
+        x: 0, 
+        y: 0, 
+        z: 0,
         rotateX: 0, 
+        rotateY: 0, 
+        rotateZ: 0,  
         duration: animationSettings.popupTextDuration,
       ease: animationSettings.easing,
         }

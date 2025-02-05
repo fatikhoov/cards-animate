@@ -50,11 +50,12 @@ body {
 .blocks-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   margin: calc(var(--gap) * 4) 42px;
   padding: 0;
   width: calc(100% - 84px);
   max-width: 1600px;
+  z-index: 9;
 }
 p, h4 {
   margin: 0;
@@ -64,6 +65,7 @@ p, h4 {
   position: relative;
   overflow: visible;
   display: flex;
+  visibility: visible;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
@@ -71,6 +73,7 @@ p, h4 {
   opacity: var(--popup-text-opacity-visible);
   cursor: pointer;
   color: var(--text-color);
+  will-change: visibility; /* transform будет внутри карточки */
 }
 
 .block::after {
@@ -133,28 +136,26 @@ p, h4 {
   justify-content: center;
   text-align: center;
   pointer-events: none; 
+  opacity: 1;
+  color: white;
+  mix-blend-mode: difference;
   transform: perspective(2000px);
   perspective-origin: 50% 50%;
-    z-index: 19; 
-  color: #fff;
-  mix-blend-mode: difference;
-  transform: translateZ(0);
-  will-change: color, transform;
+    z-index: 11;     
 }
+
 
 .popup-text-invert {
   opacity: 0;
   font-size: 3.5em;
   font-weight: bold; 
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 1.55; 
   display: inline-block;
   transform: translate3d(0px, 84px, 0px) scale3d(1, 1, 1) rotateX(-45deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
   transform-style: preserve-3d; 
-  pointer-events: none;
-  backface-visibility: hidden;
-  z-index: 20; 
-  will-change: color, transform;
+  transform: translateZ(0);
+  pointer-events: none;  
 }
 
 
@@ -166,8 +167,9 @@ p, h4 {
 
 .blocks-container .block:nth-child(2) {
   width: var(--block-second-width);
-  margin-left: auto;
-  margin-bottom: auto;
+/*   margin-left: auto;
+  margin-bottom: auto; */
+  max-height: fit-content;
   max-width: 50%;
 } 
 
@@ -187,12 +189,12 @@ p, h4 {
   max-height: var(--block-last-image-height);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 991px) {
   .blocks-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--gap); 
+    gap: calc(var(--gap) * 2) !important; 
   }
 
   .blocks-container .block {
@@ -213,8 +215,7 @@ p, h4 {
   } 
 
   .popup-text-invert {
-    width: 84%;
-    font-size: 24px !important;
+    width: 84%; 
   }
 }
 

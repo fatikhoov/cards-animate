@@ -22,16 +22,16 @@ export function handleCardHover(event) {
     }, 1000);
 }
 
-export function handleCardLeave(event) {
-  resetCardAnimation(event.currentTarget);
+export function handleCardLeave() {
+  resetCardAnimation();
   currentTarget = null 
   isFirstActive = true
   clearTimeout(scrollTimeoutInter)
   clearTimeout(scrollTimeout)
 }
 
-export function handleGlobalMouseLeave(event) {   
-    resetCardAnimation(event.currentTarget);
+export function handleGlobalMouseLeave() {   
+    resetCardAnimation();
     currentTarget = null
     isFirstActive = true
     clearTimeout(scrollTimeoutInter)
@@ -40,7 +40,7 @@ export function handleGlobalMouseLeave(event) {
 
 export function handleGlobalScroll() {
     try { 
-      if (currentTarget) resetCardAnimation(currentTarget);
+      if (currentTarget) resetCardAnimation();
       clearTimeout(scrollTimeout)
       scrollTimeout = setTimeout(() => {
       const blocks = document.querySelectorAll('.block');
