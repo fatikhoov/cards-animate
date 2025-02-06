@@ -3,7 +3,7 @@ const animationSettings = {
   opacityDuration: 0.8,
   opacityDurationActive: 0.8,
     popupTextDuration: 0.8,
-    titleDuration: 0.8,
+    titleDuration: 0.4,
     easing: "power1.out",
   };
   
