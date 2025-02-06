@@ -18,7 +18,7 @@ class CardList {
         this.container.appendChild(card.render());
       });
     } catch (error) {
-      console.error('Ошибка загрузки данных:', error);
+      console.error('Ошибка в загрузке данных:', error);
     } finally {
     console.log('рендер закончен')
     }
