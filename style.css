@@ -141,7 +141,7 @@ p, h4 {
   mix-blend-mode: difference;
   transform: perspective(2000px);
   perspective-origin: 50% 50%;
-    z-index: 11;     
+  z-index: 11;     
 }
 
 
