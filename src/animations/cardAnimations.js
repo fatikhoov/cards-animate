@@ -11,6 +11,7 @@ const animationSettings = {
 
     gsap.killTweensOf(".block");
     gsap.to(".block", {
+      opacity: 1,
       visibility: 'visible',
       duration: animationSettings.opacityDuration,
       ease: 'ease',
@@ -41,6 +42,7 @@ const animationSettings = {
 
     gsap.killTweensOf('.block');
     gsap.to('.block', {
+      opacity: (i, el) => (el === target ? '' : 0),
       visibility: (i, el) => (el === target ? '' : 'hidden'),
       duration: animationSettings.opacityDurationActive,
       ease: 'ease',

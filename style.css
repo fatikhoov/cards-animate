@@ -1,5 +1,5 @@
 :root {
-  --gap: 42px;
+  --gap: 200px;
   --font-family: Arial, sans-serif;
   --font-size-base: 14px;
   --font-size-title: 3.2vw;
@@ -41,8 +41,8 @@
 
 body {
   font-family: var(--font-family);
-  margin: 0 auto;
-  padding: 142px 0;
+  margin: 0;
+  padding: 0;
   background-color: var(--background-color);
   width: 100%;
 }
@@ -51,11 +51,12 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: calc(var(--gap) * 4) 42px;
+  margin: calc(var(--gap) * 4) auto;
   padding: 0;
   width: calc(100% - 84px);
   max-width: 1600px;
   z-index: 9;
+  row-gap: var(--gap); 
 }
 p, h4 {
   margin: 0;
@@ -73,7 +74,7 @@ p, h4 {
   opacity: var(--popup-text-opacity-visible);
   cursor: pointer;
   color: var(--text-color);
-  will-change: visibility; /* transform будет внутри карточки */
+  will-change: visibility;
 }
 
 .block::after {
@@ -161,22 +162,20 @@ p, h4 {
 
 .blocks-container .block:first-child {
   margin-left: 0;
-  margin-bottom: var(--block-first-margin-bottom);
+  max-height: fit-content;
   max-width: 50%;
 } 
 
 .blocks-container .block:nth-child(2) {
   width: var(--block-second-width);
-/*   margin-left: auto;
-  margin-bottom: auto; */
   max-height: fit-content;
   max-width: 50%;
 } 
 
 .blocks-container .block:last-child {
   width: var(--block-last-width);
+  max-height: fit-content;
   margin-left: auto;
-  margin-bottom: var(--block-last-margin-bottom);
 } 
 
 .blocks-container .block:first-child .image-wrapper {
@@ -193,8 +192,7 @@ p, h4 {
   .blocks-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: calc(var(--gap) * 2) !important; 
+    align-items: center; 
   }
 
   .blocks-container .block {
@@ -219,3 +217,23 @@ p, h4 {
   }
 }
 
+.header-dev {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 19;
+  background-color: #f6f6f6;
+  padding: 48px;
+  color: var(--text-color);
+  width: 100%;
+}
+.header-dev h1, .header-dev h2 {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+  opacity: .8;
+}
