@@ -1,9 +1,9 @@
 
 const animationSettings = {
-  opacityDuration: 0.6,
-  opacityDurationActive: 0.6,
-    popupTextDuration: 0.6,
-    titleDuration: 0.4,
+  opacityDuration: 0.8,
+  opacityDurationActive: 0.8,
+    popupTextDuration: 0.8,
+    titleDuration: 0.8,
     easing: "power1.out",
   };
   
@@ -13,7 +13,7 @@ const animationSettings = {
     gsap.to(".block", {
       opacity: 1,
       visibility: 'visible',
-      duration: animationSettings.opacityDuration,
+      duration: animationSettings.opacityDuration * 3,
       ease: 'ease',
     });
   
@@ -44,7 +44,7 @@ const animationSettings = {
     gsap.to('.block', {
       opacity: (i, el) => (el === target ? '' : 0),
       visibility: (i, el) => (el === target ? '' : 'hidden'),
-      duration: animationSettings.opacityDurationActive,
+      duration: animationSettings.opacityDurationActive * 3,
       ease: 'ease',
     });
 

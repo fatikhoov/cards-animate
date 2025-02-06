@@ -51,12 +51,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: calc(var(--gap) * 4) auto;
+  margin: calc(var(--gap) * 2) auto;
   padding: 0;
   width: calc(100% - 84px);
   max-width: 1600px;
-  z-index: 9;
-  row-gap: var(--gap); 
+  row-gap: var(--gap);  
 }
 p, h4 {
   margin: 0;
@@ -75,6 +74,7 @@ p, h4 {
   cursor: pointer;
   color: var(--text-color);
   will-change: visibility;
+ 
 }
 
 .block::after {
